@@ -1,0 +1,33 @@
+{
+  "name": "gem-puzzle",
+  "version": "1.0.0",
+  "description": "sliding puzzle game web-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "eslint": "eslint --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolling-scopes-school/abdulloh76-JS2020Q3.git"
+  },
+  "keywords": [],
+  "author": "Abdullokh Musaev",
+  "license": "ISC",
+  "homepage": "https://github.com/rolling-scopes-school/abdulloh76-JS2020Q3#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "file-loader": "^6.2.0",
+    "ts-loader": "^8.0.10",
+    "typescript": "^4.0.5",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0"
+  }
+}
