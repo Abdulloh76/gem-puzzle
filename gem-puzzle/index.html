@@ -5,8 +5,109 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Gem Puzzle</title>
    <link rel="icon" href="https://www.flaticon.com/svg/static/icons/svg/2983/2983210.svg">
+   <link rel="stylesheet" href="./src/style.css">
+
+   <!-- Bootstrap -->
+   <!-- Font Awesome -->
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+   <!-- Google Fonts -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+   <!-- Bootstrap core CSS -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-   
+
+   <main class="game">
+      <div class="puzzle-container">
+         <div class="sliding-puzzle">
+            <div class="empty"></div>
+            <div class="cell" style="left: 100px; top: 0px;">1</div>
+            <div class="cell" style="left: 200px; top: 0px;">2</div>
+            <div class="cell" style="left: 300px; top: 0px;">3</div>
+            <div class="cell" style="left: 0px; top: 100px;">4</div>
+            <div class="cell" style="left: 100px; top: 100px;">5</div>
+            <div class="cell" style="left: 200px; top: 100px;">6</div>
+            <div class="cell" style="left: 300px; top: 100px;">7</div>
+            <div class="cell" style="left: 0px; top: 200px;">8</div>
+            <div class="cell" style="left: 100px; top: 200px;">9</div>
+            <div class="cell" style="left: 200px; top: 200px;">10</div>
+            <div class="cell" style="left: 300px; top: 200px;">11</div>
+            <div class="cell" style="left: 0px; top: 300px;">12</div>
+            <div class="cell" style="left: 100px; top: 300px;">13</div>
+            <div class="cell" style="left: 200px; top: 300px;">14</div>
+            <div class="cell" style="left: 300px; top: 300px;">15</div>
+         </div>
+
+         <div class="timing">
+            <div class="moves">
+               <div class="move-icon timing-icon icon-darked">
+                  <img  alt="movement" title="moves" src="./src/icons/move.svg">
+               </div>
+               <div class="progress move-timing ">
+                  <p class="move-numbers timing-text">Puzzles 00</p>
+                  <div class="progress-bar move-progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+               </div>
+            </div>
+            <div class="time">
+               <div class="time-icon timing-icon icon-darked">
+                  <img alt="hourglass" title="timer" src="./src/icons/hourglass.svg">
+               </div>
+               <div class="progress time-timing">
+                  <p class="time-time timing-text">Time 05:31</p>
+                  <div class="progress-bar time-progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="options-container">
+         <img class="puzzle-image" src="https://github.com/irinainina/image-data/blob/master/box/1.jpg?raw=true" alt="">
+
+         <div class="options">
+            <button class="option change-image icon-darked">
+               <img src="./src/icons/images.svg" alt="">
+                  <p>change image</p>
+            </button>
+            <button class="option sound icon-darked">
+               <img src="./src/icons/volume.svg" alt="">
+                  <p>sound</p>
+            </button>
+            <button class="option change-size icon-darked">
+               <img src="./src/icons/matrix.svg" alt="">
+                  <p>change size</p>
+            </button>
+            <button class="option save-game icon-darked">
+               <img src="./src/icons/save-game.svg" alt="">
+                  <p>save game</p>
+            </button>
+            <button class="option shuffle icon-darked">
+               <img src="./src/icons/shuffle.svg" alt="">
+                  <p>shuffle</p>
+            </button>
+            <button class="option saved-games icon-darked">
+               <img src="./src/icons/saved-games.svg" alt="">
+                  <p>saved games</p>
+            </button>
+            <button class="option top-scores icon-darked">
+               <img src="./src/icons/podium.svg" alt="">
+                  <p>top scores</p>
+            </button>
+            <button class="option solve-puzzle icon-darked">
+               <img src="./src/icons/solution.svg" alt="">
+                  <p>solve puzzle</p>
+            </button>
+         </div>
+
+ 
+      </div>
+
+      
+
+   </main>
+
+
+   <!-- <script src="./dist/main.js"></script> -->
+
 </body>
 </html>
