@@ -1,6 +1,6 @@
 export default interface Cell {
   id: number;
   left: number;
-  right: number;
+  top: number;
   element: HTMLElement;
 }

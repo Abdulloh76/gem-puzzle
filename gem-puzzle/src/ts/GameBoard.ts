@@ -12,48 +12,49 @@ const main: HTMLElement = create(
 export default class GameBoard {
   cells: Array<Cell>;
 
-  container: HTMLElement;
+  puzzleContainer: HTMLElement;
 
-  board: HTMLElement;
+  gameBoard: HTMLElement;
 
   empty: Cell;
 
   cellSize: number;
 
   constructor() {
-    this.container = create('div', 'puzzle-container', null, main);
-    this.board = create('div', 'sliding-puzzle', null, this.container);
+    this.puzzleContainer = create('div', 'puzzle-container', null, main);
+    this.gameBoard = create('div', 'sliding-puzzle', null, this.puzzleContainer);
     this.cellSize = 100; // px ? vw
     this.cells = [];
     this.empty = {
       id: 0,
       left: 0,
-      right: 0,
-      element: create('div', 'empty', null, this.board),
+      top: 0,
+      element: create('div', 'empty', null, this.gameBoard),
     };
     this.cells.push(this.empty);
   }
 
   init(size: number) {
     for (let i: number = 1; i <= size ** 2 - 1; i += 1) {
-      const cell: HTMLElement = create('div', 'cell', `${i}`, this.board);
+      const cell: HTMLElement = create('div', 'cell', `${i}`, this.gameBoard);
       const left = i % size;
-      const right = (i - left) / size;
+      const top = (i - left) / size;
 
       this.cells.push({
         id: i,
         left,
-        right,
+        top,
         element: cell,
       });
 
       cell.style.left = `${left * this.cellSize}px`;
-      cell.style.right = `${right * this.cellSize}px`;
+      cell.style.top = `${top * this.cellSize}px`;
 
       cell.addEventListener('click', this.move);
     }
 
     document.body.prepend(main);
+    console.log(this.gameBoard.innerHTML)
   }
 
   randomize() {}
