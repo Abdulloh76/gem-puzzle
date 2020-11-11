@@ -1,5 +1,5 @@
 import GameBoard from './ts/GameBoard';
 
-const board = new GameBoard();
+const board = new GameBoard(4);
 
-board.init(4);
+board.init();

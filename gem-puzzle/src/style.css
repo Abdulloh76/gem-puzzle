@@ -3,7 +3,7 @@ html{
    height: 100%;
    display: flex;
    align-items: center;
-   padding: 2em;
+   padding: 15px;
 }
 body{
    width: 100%;
@@ -49,7 +49,7 @@ body{
    text-shadow: 1.5px 1.5px 1.5px #000;
    background-color: salmon;
    box-shadow: inset 0 0 0.5em #000000;
-
+   user-select: none;
    cursor: pointer;
    display: flex;
    align-items: flex-end;
@@ -79,7 +79,7 @@ body{
    padding: 1px;
 }
 .icon-darked{
-   padding: 0.2em;
+   padding: 0.25em;
    display: flex;
    align-items: center;
    justify-content: center;
