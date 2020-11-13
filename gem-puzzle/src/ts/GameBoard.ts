@@ -24,48 +24,50 @@ export default class GameBoard {
 
   constructor(size: number) {
     this.size = size;
+    this.cellSize = Math.floor(((window.innerWidth - 30) * 0.68 - 50) / this.size); // size???
     this.puzzleContainer = create('div', 'puzzle-container', null, main);
-    this.gameBoard = create(
-      'div',
-      'sliding-puzzle',
-      null,
-      this.puzzleContainer,
-    );
-    this.cellSize = Math.floor(
-      ((window.innerWidth - 30) * 0.68 - 50) / this.size,
-    );
+    this.gameBoard = create('div', 'sliding-puzzle', null, this.puzzleContainer);
+    this.gameBoard.style.height = `${this.cellSize * this.size + 16 / this.size}px`;
     this.cells = [];
   }
 
   init() {
     const numbers = this.randomize();
+    const emptyIndex = numbers.indexOf('');
+    this.empty = {
+      id: emptyIndex + 1,
+      value: numbers[emptyIndex],
+      left: emptyIndex % this.size,
+      top: (emptyIndex - (emptyIndex % this.size)) / this.size,
+      element: create('div', 'empty', `${numbers[emptyIndex]}`, null),
+    };
+
     for (let i: number = 0; i <= this.size ** 2 - 1; i += 1) {
       const left = i % this.size;
       const top = (i - left) / this.size;
-      if (numbers[i]) {
+      if (numbers[i] === '') {
+        this.cells.push(this.empty);
+        this.gameBoard.append(this.empty.element);
+        this.generateCell(this.empty);
+      } else {
+        const cell = create('div', 'cell', `${numbers[i]}`, this.gameBoard);
+
         this.cells.push({
           id: i + 1,
+          value: numbers[i],
           left,
           top,
-          element: create('div', 'cell', `${numbers[i]}`, this.gameBoard),
+          element: cell,
         });
-        this.cells[i].element.addEventListener('click', this.move);
-      } else {
-        this.empty = {
-          id: i + 1,
-          left,
-          top,
-          element: create('div', 'empty', `${numbers[i]}`, this.gameBoard),
-        }
-        this.cells.push(this.empty)
+        this.generateCell(this.cells[i]);
+        cell.addEventListener('click', this.move);
       }
+
       this.cells[i].element.style.height = `${this.cellSize - 16 / this.size}px`;
       this.cells[i].element.style.width = `${this.cellSize - 16 / this.size}px`;
       // why 16? because it multiple 8(max size of board)?
-      this.cells[i].element.style.left = `${left * this.cellSize + 16 / this.size}px`;
-      this.cells[i].element.style.top = `${top * this.cellSize + 16 / this.size}px`;
+      // it is just gap between cells
     }
-
     document.body.prepend(main);
   }
 
@@ -94,7 +96,36 @@ export default class GameBoard {
     return !(inv % 2);
   }
 
-  move() {}
+  move = (e: Event) => {
+    const cell = this.cells.filter(
+      (obj) => obj.element === (e.target as Element).closest('.cell'),
+    )[0];
+    const leftDiff = Math.abs(this.empty.left - cell.left);
+    const topDiff = Math.abs(this.empty.top - cell.top);
 
-  generateLayout() {}
+    if (leftDiff + topDiff > 1) {
+      return;
+    }
+
+    const emptyLeft = this.empty.left;
+    const emptyTop = this.empty.top;
+    const emptyId = this.empty.id;
+
+    this.empty.left = cell.left;
+    this.empty.top = cell.top;
+    this.empty.id = cell.id;
+
+    cell.left = emptyLeft;
+    cell.top = emptyTop;
+    cell.id = emptyId;
+
+    this.generateCell(this.empty)
+    this.generateCell(cell)
+  };
+
+  generateCell(el: Cell) {
+    const cell = el;
+    cell.element.style.left = `${cell.left * this.cellSize + 16 / this.size}px`;
+    cell.element.style.top = `${cell.top * this.cellSize + 16 / this.size}px`;
+  }
 }
