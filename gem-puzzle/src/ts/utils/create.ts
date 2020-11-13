@@ -12,7 +12,7 @@ export default function create(
   child: any,
   parent: HTMLElement,
   ...dataAttr: any
-) {
+):HTMLElement {
   let element: any = null;
 
   try {
@@ -39,7 +39,7 @@ export default function create(
     dataAttr.forEach(([attrName, attrValue]:Array<string>) => {
       if (attrValue === '') element.setAttribute(attrName, '');
 
-      if (attrName.match(/value|id|placeholder|cols|rows|autocorrect|spellcheck/)) {
+      if (attrName.match(/value|id|placeholder|cols|rows|role|aria|src|alt|title|autocorrect|spellcheck/)) {
         element.setAttribute(attrName, attrValue);
       } else {
         element.dataset[attrName] = attrValue;
