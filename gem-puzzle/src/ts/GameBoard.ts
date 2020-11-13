@@ -1,7 +1,7 @@
 import Cell from './Cell';
 import create from './utils/create';
 import dontUseStrictly from './utils/dontUseImg';
-// 1,100,110?,121,126,.13.,133?,16,.18.,.19.,23?,24,.26.,.27.,.28.,.30.,.34.,.36.,.39.,.42.,.45.,.46.,47?,.48.,.49.,.51.,52,.53.,54,55,.56.,.57.,.58.,.60.,.61.,.62.,.63.,64?,.66.,.67.,.71.,.72.,75,.76.,.78.,.79.,.8.,80?,81?,82?,83,84,.85.,86?,87,89?,.93.,.97.
+
 export const main: HTMLElement = create(
   'main',
   'game',
@@ -25,6 +25,16 @@ export default class GameBoard {
 
   bgSrc: string;
 
+  moveNumbers: HTMLElement;
+
+  moves:number;
+
+  moveProgress: HTMLElement;
+
+  timeTime: HTMLElement;
+
+  timeProgress: HTMLElement;
+
   constructor(size: number) {
     this.size = size;
     this.cellSize = Math.floor(((window.innerWidth - 30) * 0.68 - 50) / this.size); // size???
@@ -35,6 +45,28 @@ export default class GameBoard {
     this.cells = [];
     this.bgSrc = '';
     this.generateBgImg();
+    this.moves = 0;
+    this.moveNumbers = create('p', 'move-numbers timing-text', 'Moves 0', null);
+    this.moveProgress = create(
+      'div',
+      'progress-bar move-progress',
+      null,
+      null,
+      ['aria-valuenow', 25],
+      ['aria-valuemin', 0],
+      ['aria-valuemax', 100],
+    );
+
+    this.timeTime = create('p', 'timing-text time-time', 'Time 00:00', null);
+    this.timeProgress = create(
+      'div',
+      'progress-bar time-progress',
+      null,
+      null,
+      ['aria-valuenow', 25],
+      ['aria-valuemin', 0],
+      ['aria-valuemax', 100],
+    );
   }
 
   init() {
@@ -75,6 +107,7 @@ export default class GameBoard {
       // it is just gap between cells
     }
     this.drawBg(this.bgSrc);
+    this.generateTimingLayout()
     document.body.prepend(main);
   }
 
@@ -141,7 +174,7 @@ export default class GameBoard {
     while (dontUseStrictly.includes(num)) {
       num = Math.round(Math.random() * 150);
     }
-    this.bgSrc = `https://raw.githubusercontent.com/irinainina/image-data/master/box/${num}.jpg`
+    this.bgSrc = `https://raw.githubusercontent.com/irinainina/image-data/master/box/${num}.jpg`;
   }
 
   async drawBg(src: string) {
@@ -176,4 +209,28 @@ export default class GameBoard {
       });
     };
   }
+
+  generateTimingLayout() {
+    // pain
+    create('div', 'timing', [
+
+      create('div', 'moves', [
+        create('div', 'move-icon timing-icon icon-darked',
+          create('img', '', null, null, ['src', './src/icons/move.svg'], ['alt', 'movement'], ['title', 'moves']), null),
+
+        create('div', 'progress move-timing', [this.moveNumbers, this.moveProgress], null),
+      ], null),
+
+      create('div', 'time', [
+        create('div', 'time-icon timing-icon icon-darked',
+          create('img', '', null, null, ['src', './src/icons/hourglass.svg'], ['alt', 'hourglass'], ['title', 'time']), null),
+
+        create('div', 'progress time-timing', [this.timeTime, this.timeProgress], null),
+      ], null),
+    ], this.puzzleContainer)
+  }
+
+  generateTime() {}
+
+  generateMoves() {}
 }
