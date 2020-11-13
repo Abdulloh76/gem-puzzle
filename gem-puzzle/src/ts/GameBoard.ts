@@ -1,5 +1,6 @@
 import Cell from './Cell';
 import create from './utils/create';
+import dontUseStrictly from './utils/dontUseImg';
 // 1,100,110?,121,126,.13.,133?,16,.18.,.19.,23?,24,.26.,.27.,.28.,.30.,.34.,.36.,.39.,.42.,.45.,.46.,47?,.48.,.49.,.51.,52,.53.,54,55,.56.,.57.,.58.,.60.,.61.,.62.,.63.,64?,.66.,.67.,.71.,.72.,75,.76.,.78.,.79.,.8.,80?,81?,82?,83,84,.85.,86?,87,89?,.93.,.97.
 export const main: HTMLElement = create(
   'main',
@@ -136,7 +137,10 @@ export default class GameBoard {
   }
 
   generateBgImg() {
-    const num = Math.round(Math.random() * 150);
+    let num = Math.round(Math.random() * 150);
+    while (dontUseStrictly.includes(num)) {
+      num = Math.round(Math.random() * 150);
+    }
     this.bgSrc = `https://raw.githubusercontent.com/irinainina/image-data/master/box/${num}.jpg`
   }
 
