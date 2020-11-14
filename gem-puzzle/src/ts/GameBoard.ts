@@ -10,7 +10,7 @@ export const main: HTMLElement = create(
   null,
 );
 
-export default class GameBoard {
+export class GameBoard {
   size: number;
 
   cells: Array<Cell>;
@@ -23,7 +23,7 @@ export default class GameBoard {
 
   cellSize: number;
 
-  bgSrc: string;
+  protected bgSrc: string;
 
   moves:number;
 
@@ -178,7 +178,6 @@ export default class GameBoard {
       num = Math.round(Math.random() * 150);
     }
     this.bgSrc = `https://raw.githubusercontent.com/irinainina/image-data/master/box/${num}.jpg`;
-    // this.bgSrc = `https://raw.githubusercontent.com/irinainina/image-data/master/box/100.jpg`;
   }
 
   async drawBg(src: string) {
@@ -236,7 +235,7 @@ export default class GameBoard {
   }
 
   generateTime = () => {
-    const limit = 1.4 * this.size - 1.8;
+    const limit = (1.4 * this.size - 1.8) * 60;
     const maxHeight = this.moveProgress.closest('.progress').clientHeight;
     this.timer += 1; // seconds
 
