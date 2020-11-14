@@ -25,9 +25,11 @@ export default class GameBoard {
 
   bgSrc: string;
 
-  moveNumbers: HTMLElement;
-
   moves:number;
+
+  timer:number;
+
+  moveNumbers: HTMLElement;
 
   moveProgress: HTMLElement;
 
@@ -46,6 +48,7 @@ export default class GameBoard {
     this.bgSrc = '';
     this.generateBgImg();
     this.moves = 0;
+    this.timer = 0;
     this.moveNumbers = create('p', 'move-numbers timing-text', 'Moves 0', null);
     this.moveProgress = create(
       'div',
@@ -146,7 +149,7 @@ export default class GameBoard {
     if (leftDiff + topDiff > 1) {
       return;
     }
-
+    this.generateMoves();
     const emptyLeft = this.empty.left;
     const emptyTop = this.empty.top;
     const emptyId = this.empty.id;
@@ -175,6 +178,7 @@ export default class GameBoard {
       num = Math.round(Math.random() * 150);
     }
     this.bgSrc = `https://raw.githubusercontent.com/irinainina/image-data/master/box/${num}.jpg`;
+    // this.bgSrc = `https://raw.githubusercontent.com/irinainina/image-data/master/box/100.jpg`;
   }
 
   async drawBg(src: string) {
@@ -186,14 +190,13 @@ export default class GameBoard {
     });
     // now do something with `dataUrl`
     // https://stackoverflow.com/questions/25690641/img-url-to-dataurl-using-javascript
+
+    const img = new Image();
+    img.src = dataUrl;
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = this.cellSize;
-    canvas.height = this.cellSize;
-    const img = new Image();
-    img.width = this.cellSize * this.size + 16 / this.size;
-    img.height = this.cellSize * this.size + 16 / this.size;
-    img.src = dataUrl;
+    canvas.height = 900 / this.size - 16 / this.size;
+    canvas.width = 900 / this.size - 16 / this.size;
     img.onload = () => {
       this.cells.forEach((obj) => {
         const cell = obj;
@@ -201,9 +204,11 @@ export default class GameBoard {
         const left = (cell.value - 1) % this.size;
         const top = (cell.value - 1 - left) / this.size;
 
-        const x = left * this.cellSize;
-        const y = top * this.cellSize;
-        const imgSize = this.cellSize - 16 / this.size;
+        const x = left * (img.height / this.size - 16 / this.size);
+        const y = top * (img.height / this.size - 16 / this.size);
+
+        const imgSize = img.height / this.size - 16 / this.size;
+
         ctx.drawImage(img, x, y, imgSize, imgSize, 0, 0, imgSize, imgSize);
         cell.element.style.backgroundImage = `url('${canvas.toDataURL()}')`;
       });
@@ -230,7 +235,24 @@ export default class GameBoard {
     ], this.puzzleContainer)
   }
 
-  generateTime() {}
+  generateTime = () => {
+    const limit = 200; // limit???
+    const maxHeight = this.moveProgress.closest('.progress').clientHeight;
+    this.timer += 1; // seconds
 
-  generateMoves() {}
+    this.timeTime.textContent = `Time ${Math.floor(this.timer / 60)}:${this.timer % 60}`
+    this.timeProgress.style.height = `${maxHeight * ((limit - this.timer) / limit)}px`
+
+    setTimeout(this.generateTime, 1000);
+  }
+
+  generateMoves = () => {
+    if (!this.moves) this.generateTime();
+    const limit = 100; // limit???
+    const maxHeight = this.moveProgress.closest('.progress').clientHeight;
+    this.moves += 1;
+
+    this.moveNumbers.textContent = `Moves ${this.moves}`
+    this.moveProgress.style.height = `${maxHeight * ((limit - this.moves) / limit)}px`
+  }
 }
