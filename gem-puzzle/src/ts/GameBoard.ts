@@ -236,7 +236,7 @@ export default class GameBoard {
   }
 
   generateTime = () => {
-    const limit = 200; // limit???
+    const limit = 1.4 * this.size - 1.8;
     const maxHeight = this.moveProgress.closest('.progress').clientHeight;
     this.timer += 1; // seconds
 
@@ -245,10 +245,18 @@ export default class GameBoard {
 
     setTimeout(this.generateTime, 1000);
   }
+  // 3  0.8min 60 -> 1min 60moves
+  // 4  1.5min 160 -> 3min 250moves
+  // 5  3min 350 -> 4min 500moves
+  // 6  5min 570 -> 6min 700moves
+  // 7  8min 800 -> 9min 900moves
+  // 8  10min 1000 -> 10min 1000moves
 
+  // approximation time(size) = 1.4 * size - 1.8
+  // approximation moves(size) = 195 * size - 508
   generateMoves = () => {
     if (!this.moves) this.generateTime();
-    const limit = 100; // limit???
+    const limit = 195 * this.size - 508;
     const maxHeight = this.moveProgress.closest('.progress').clientHeight;
     this.moves += 1;
 
