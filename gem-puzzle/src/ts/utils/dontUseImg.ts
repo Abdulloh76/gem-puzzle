@@ -1,4 +1,5 @@
 const dontUseStrictly: Array<number> = [
+  0,
   1,
   100,
   110,
