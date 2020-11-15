@@ -138,11 +138,13 @@ export class GameBoard {
   hasSolution(numbers: Array<number | string>): boolean {
     // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
     let inv = 0;
-    for (let i = 0; i < this.size ** 2 - 1; i += 1) {
+    for (let i = 0; i < numbers.length; i += 1) {
       if (numbers[i]) {
         for (let j = 0; j < i; j += 1) {
           if (numbers[j] > numbers[i]) inv += 1;
         }
+      } else {
+        inv += 1 + Math.floor(i / this.size);
       }
     }
     return !(inv % 2);
