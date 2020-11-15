@@ -100,7 +100,12 @@ export default class SlidingGame extends GameBoard {
 
   soundHandler() {}
 
-  sizeHandler() {}
+  sizeHandler = () => {
+    this.size = this.size > 7 ? 3 : this.size + 1;
+    this.cancelTimer = true;
+    this.puzzleContainer.remove();
+    super.init();
+  }
 
   saveCurrentGame() {}
 

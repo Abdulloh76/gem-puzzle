@@ -29,6 +29,8 @@ export class GameBoard {
 
   timer:number;
 
+  cancelTimer: boolean;
+
   moveNumbers: HTMLElement;
 
   moveProgress: HTMLElement;
@@ -39,7 +41,11 @@ export class GameBoard {
 
   constructor(size: number) {
     this.size = size;
+    this.generateBgImg();
+    this.cancelTimer = false;
+  }
 
+  generateBaseLayout() {
     // window.innerWidth > 1024; 30,20,10=padding*2; 0.68=flex-basis; 50,30=timing-block; 0.8h;
     this.cellSize = Math.floor((window.innerHeight * 0.8 - 30) / this.size)
     if (window.innerWidth <= 1024) {
@@ -49,39 +55,22 @@ export class GameBoard {
       this.cellSize = Math.floor((window.innerWidth - 10 - 30) / this.size);
     }
 
-    this.puzzleContainer = create('div', 'puzzle-container', null, main);
+    this.puzzleContainer = create('div', 'puzzle-container', null, null);
+    main.prepend(this.puzzleContainer);
     this.gameBoard = create('div', 'sliding-puzzle', null, this.puzzleContainer);
     this.gameBoard.style.height = `${this.cellSize * this.size + 16 / this.size}px`;
     this.gameBoard.style.width = `${this.cellSize * this.size + 16 / this.size}px`;
     this.cells = [];
-    this.bgSrc = '';
-    this.generateBgImg();
     this.moves = 0;
     this.timer = 0;
     this.moveNumbers = create('p', 'move-numbers timing-text', 'Moves 0', null);
-    this.moveProgress = create(
-      'div',
-      'progress-bar move-progress',
-      null,
-      null,
-      ['aria-valuenow', 25],
-      ['aria-valuemin', 0],
-      ['aria-valuemax', 100],
-    );
-
+    this.moveProgress = create('div', 'progress-bar move-progress', null, null);
     this.timeTime = create('p', 'timing-text time-time', 'Time 00:00', null);
-    this.timeProgress = create(
-      'div',
-      'progress-bar time-progress',
-      null,
-      null,
-      ['aria-valuenow', 25],
-      ['aria-valuemin', 0],
-      ['aria-valuemax', 100],
-    );
+    this.timeProgress = create('div', 'progress-bar time-progress', null, null);
   }
 
   init() {
+    this.generateBaseLayout();
     const numbers = this.randomize();
     const emptyIndex = numbers.indexOf('');
     this.empty = {
@@ -160,7 +149,10 @@ export class GameBoard {
     if (leftDiff + topDiff > 1) {
       return;
     }
-    this.generateMoves();
+
+    if (!this.cancelTimer) this.generateMoves();
+    else this.cancelTimer = true;
+
     const emptyLeft = this.empty.left;
     const emptyTop = this.empty.top;
     const emptyId = this.empty.id;
@@ -192,6 +184,7 @@ export class GameBoard {
   }
 
   async drawBg(src: string) {
+    // firstly convert image to Data Url
     const blob = await fetch(src).then((r) => r.blob());
     const dataUrl: string = await new Promise((resolve) => {
       const reader = new FileReader();
@@ -246,6 +239,7 @@ export class GameBoard {
   }
 
   generateTime = () => {
+    if (this.cancelTimer) return;
     const limit = (1.4 * this.size - 1.8) * 60;
     const maxHeight = this.moveProgress.closest('.progress').clientHeight;
     this.timer += 1; // seconds
