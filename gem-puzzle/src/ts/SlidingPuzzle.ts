@@ -63,7 +63,7 @@ export default class SlidingGame extends GameBoard {
       create('p', '', 'new', null),
     ], this.options);
     //  savedGames
-    this.saveGame = create('button', 'option saved-games icon-darked', [
+    this.savedGames = create('button', 'option saved-games icon-darked', [
       create('img', '', null, null, ['src', './src/icons/saved-games.svg']),
       create('p', '', 'saved games', null),
     ], this.options);
@@ -77,5 +77,39 @@ export default class SlidingGame extends GameBoard {
       create('img', '', null, null, ['src', './src/icons/solution.svg']),
       create('p', '', 'solve puzzle', null),
     ], this.options);
+
+    this.events();
   }
+
+  events() {
+    this.changeImg.addEventListener('click', this.changeBgImage)
+    this.sound.addEventListener('click', this.soundHandler)
+    this.changeSize.addEventListener('click', this.sizeHandler)
+    this.saveGame.addEventListener('click', this.saveCurrentGame)
+    this.shuffle.addEventListener('click', this.shuffleGame)
+    this.savedGames.addEventListener('click', this.showSavedGames)
+    this.topScores.addEventListener('click', this.showTopScores)
+    this.solvePuzzle.addEventListener('click', this.solveHandler)
+  }
+
+  changeBgImage = () => {
+    super.generateBgImg();
+    super.drawBg(this.bgSrc);
+    this.puzzleImg.setAttribute('src', this.bgSrc);
+  }
+
+  soundHandler() {}
+
+  sizeHandler() {}
+
+  saveCurrentGame() {}
+
+  shuffleGame() {}
+
+  showSavedGames() {}
+
+  showTopScores() {}
+
+  solveHandler() {}
+
 }

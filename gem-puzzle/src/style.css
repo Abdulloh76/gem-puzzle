@@ -43,7 +43,10 @@ body{
    background-size: contain;
    
    user-select: none;
-   transition: all ease-in-out 0.3s;
+   transition: 
+      left ease-in-out 0.3s,
+      top ease-in-out 0.3s,
+      background-image ease-in-out 1.5s;
    cursor: pointer;
 
    display: flex;
