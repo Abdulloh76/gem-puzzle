@@ -23,7 +23,7 @@ export class GameBoard {
 
   cellSize: number;
 
-  protected bgSrc: string;
+  bgSrc: string;
 
   moves:number;
 
@@ -39,7 +39,16 @@ export class GameBoard {
 
   constructor(size: number) {
     this.size = size;
-    this.cellSize = Math.floor(((window.innerWidth - 30) * 0.68 - 50) / this.size); // size???
+
+    // window.innerWidth > 1024; 30,20,10=padding*2; 0.68=flex-basis; 50,30=timing-block; 0.8h;
+    this.cellSize = Math.floor((window.innerHeight * 0.8 - 30) / this.size)
+    if (window.innerWidth <= 1024) {
+      this.cellSize = Math.floor(((window.innerWidth - 20) * 0.68 - 50) / this.size);
+    }
+    if (window.innerWidth <= 414) {
+      this.cellSize = Math.floor((window.innerWidth - 10 - 30) / this.size);
+    }
+
     this.puzzleContainer = create('div', 'puzzle-container', null, main);
     this.gameBoard = create('div', 'sliding-puzzle', null, this.puzzleContainer);
     this.gameBoard.style.height = `${this.cellSize * this.size + 16 / this.size}px`;
@@ -231,7 +240,7 @@ export class GameBoard {
 
         create('div', 'progress time-timing', [this.timeTime, this.timeProgress], null),
       ], null),
-    ], this.puzzleContainer)
+    ], this.puzzleContainer).style.height = this.gameBoard.style.height;
   }
 
   generateTime = () => {
