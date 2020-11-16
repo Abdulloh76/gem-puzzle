@@ -1,6 +1,7 @@
 import Cell from './Cell';
 import create from './utils/create';
 import dontUseStrictly from './utils/dontUseImg';
+import InfoModal from "./InfoModal";
 
 export const main: HTMLElement = create(
   'main',
@@ -9,7 +10,7 @@ export const main: HTMLElement = create(
   null,
   null,
 );
-const addZero = (num:number) => (num < 10 ? '0' : '') + num;
+export const addZero = (num:number) => (num < 10 ? '0' : '') + num;
 
 export class GameBoard {
   size: number;
@@ -168,6 +169,11 @@ export class GameBoard {
     cell.top = emptyTop;
     cell.id = emptyId;
 
+    if (this.isSolved(this.size)) {
+      this.cancelTimer = true;
+      const modal = new InfoModal(this.gameBoard)
+      modal.finished(this.timer, this.moves);
+    }
     this.generateCell(this.empty);
     this.generateCell(cell);
   };
@@ -252,7 +258,7 @@ export class GameBoard {
     if (this.cancelTimer) return;
     setTimeout(this.generateTime, 1000);
   }
-  // 3  0.8min 60 -> 1min 60moves
+  // {3  0.8min 60 -> 1min 60moves
   // 4  1.5min 160 -> 3min 250moves
   // 5  3min 350 -> 4min 500moves
   // 6  5min 570 -> 6min 700moves
@@ -260,7 +266,7 @@ export class GameBoard {
   // 8  10min 1000 -> 10min 1000moves
 
   // approximation time(size) = 1.4 * size - 1.8
-  // approximation moves(size) = 195 * size - 508
+  // approximation moves(size) = 195 * size - 508}
   generateMoves = () => {
     if (this.moves === 0) this.generateTime();
     const limit = 195 * this.size - 508;
@@ -269,5 +275,12 @@ export class GameBoard {
 
     this.moveNumbers.textContent = `Moves ${this.moves}`
     this.moveProgress.style.height = `${maxHeight * ((limit - this.moves) / limit)}px`
+  }
+
+  isSolved(size:number):boolean {
+    return this.cells.every((cell) => {
+      if (typeof cell.value === 'number') return cell.value === cell.id
+      return cell.id === size ** 2
+    })
   }
 }
