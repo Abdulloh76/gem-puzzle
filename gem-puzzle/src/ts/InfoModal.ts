@@ -1,4 +1,5 @@
 import create from './utils/create';
+import { addZero } from './GameBoard';
 
 export default class InfoModal {
   parent: HTMLElement;
@@ -22,7 +23,6 @@ export default class InfoModal {
       this.modalBase,
     );
     closeBtn.addEventListener('click', this.closeModal);
-    document.querySelector('.option').addEventListener('click', this.closeModal);
   }
 
   closeModal = () => {
@@ -30,8 +30,13 @@ export default class InfoModal {
   };
 
   winned(time: number, moves: number) {
-    create('h1', 'modal-title', 'Great:thumbsup:!!! You have finished the puzzle', this.modalBase);
-    create('p', 'win-parameters', `And it lasted ${time} and ${moves}moves`, this.modalBase);
+    create('h1', 'modal-title', 'Great!!! You have finished the puzzle', this.modalBase);
+    create(
+      'p',
+      'win-parameters',
+      `And it lasted ${addZero(Math.floor(time / 60))}:${addZero(time % 60)} and ${moves} moves`,
+      this.modalBase,
+    );
   }
 
   limitIsOut() {}
