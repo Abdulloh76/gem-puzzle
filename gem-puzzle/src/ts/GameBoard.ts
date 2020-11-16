@@ -9,6 +9,7 @@ export const main: HTMLElement = create(
   null,
   null,
 );
+const addZero = (num:number) => (num < 10 ? '0' : '') + num;
 
 export class GameBoard {
   size: number;
@@ -245,7 +246,7 @@ export class GameBoard {
     const maxHeight = this.moveProgress.closest('.progress').clientHeight;
     this.timer += 1; // seconds
 
-    this.timeTime.textContent = `Time ${Math.floor(this.timer / 60)}:${this.timer % 60}`
+    this.timeTime.textContent = `Time ${addZero(Math.floor(this.timer / 60))}:${addZero(this.timer % 60)}`
     this.timeProgress.style.height = `${maxHeight * ((limit - this.timer) / limit)}px`
 
     if (this.cancelTimer) return;
