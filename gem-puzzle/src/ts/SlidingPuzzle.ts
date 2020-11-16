@@ -98,7 +98,11 @@ export default class SlidingGame extends GameBoard {
     this.puzzleImg.setAttribute('src', this.bgSrc);
   }
 
-  soundHandler = () => {}
+  soundHandler = () => {
+    this.soundOn = !this.soundOn;
+    const src = this.soundOn ? 'volume' : 'mute';
+    document.querySelector('.sound img').setAttribute('src', `./src/icons/${src}.svg`);
+  }
 
   sizeHandler = () => {
     this.size = this.size > 7 ? 3 : this.size + 1;

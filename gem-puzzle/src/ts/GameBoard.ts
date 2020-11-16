@@ -25,6 +25,10 @@ export class GameBoard {
 
   bgSrc: string;
 
+  soundOn:boolean;
+
+  audio:HTMLAudioElement;
+
   moves:number;
 
   timer:number;
@@ -44,6 +48,7 @@ export class GameBoard {
     this.generateBgImg();
     this.cancelTimer = false;
     this.generateBaseLayout();
+    this.soundOn = true;
   }
 
   generateBaseLayout() {
@@ -55,10 +60,10 @@ export class GameBoard {
     if (window.innerWidth <= 414) {
       this.cellSize = Math.floor((window.innerWidth - 10 - 30) / this.size);
     }
-
     this.puzzleContainer = create('div', 'puzzle-container', null, null);
     main.prepend(this.puzzleContainer);
     this.gameBoard = create('div', 'sliding-puzzle', null, this.puzzleContainer);
+    this.audio = <HTMLAudioElement>create('audio', 'sound', null, this.puzzleContainer, ['src', './src/sounds/shift.mp3']);
     this.gameBoard.style.height = `${this.cellSize * this.size + 16 / this.size}px`;
     this.gameBoard.style.width = `${this.cellSize * this.size + 16 / this.size}px`;
     this.cells = [];
@@ -148,6 +153,7 @@ export class GameBoard {
     if (leftDiff + topDiff > 1) return
     if (this.cancelTimer) this.cancelTimer = false;
     this.generateMoves();
+    if (this.soundOn) this.audio.play();
 
     const emptyLeft = this.empty.left;
     const emptyTop = this.empty.top;
