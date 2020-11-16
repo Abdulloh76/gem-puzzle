@@ -105,6 +105,8 @@ export default class SlidingGame extends GameBoard {
     this.cancelTimer = true;
     this.puzzleContainer.remove();
     this.generateBaseLayout();
+    this.moves = 0;
+    this.timer = -1;
     super.init();
   }
 
@@ -112,6 +114,10 @@ export default class SlidingGame extends GameBoard {
 
   shuffleGame = () => {
     this.cancelTimer = true;
+    this.moves = -1;
+    this.timer = -1;
+    this.generateTime();
+    this.generateMoves();
     const numbers = this.randomize();
     for (let i: number = 0; i < numbers.length; i += 1) {
       const left = i % this.size;

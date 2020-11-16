@@ -145,12 +145,9 @@ export class GameBoard {
     const leftDiff = Math.abs(this.empty.left - cell.left);
     const topDiff = Math.abs(this.empty.top - cell.top);
 
-    if (leftDiff + topDiff > 1) {
-      return;
-    }
-
-    if (!this.cancelTimer) this.generateMoves();
-    else this.cancelTimer = true;
+    if (leftDiff + topDiff > 1) return
+    if (this.cancelTimer) this.cancelTimer = false;
+    this.generateMoves();
 
     const emptyLeft = this.empty.left;
     const emptyTop = this.empty.top;
@@ -238,7 +235,6 @@ export class GameBoard {
   }
 
   generateTime = () => {
-    if (this.cancelTimer) return;
     const limit = (1.4 * this.size - 1.8) * 60;
     const maxHeight = this.moveProgress.closest('.progress').clientHeight;
     this.timer += 1; // seconds
@@ -246,6 +242,7 @@ export class GameBoard {
     this.timeTime.textContent = `Time ${Math.floor(this.timer / 60)}:${this.timer % 60}`
     this.timeProgress.style.height = `${maxHeight * ((limit - this.timer) / limit)}px`
 
+    if (this.cancelTimer) return;
     setTimeout(this.generateTime, 1000);
   }
   // 3  0.8min 60 -> 1min 60moves
@@ -258,7 +255,7 @@ export class GameBoard {
   // approximation time(size) = 1.4 * size - 1.8
   // approximation moves(size) = 195 * size - 508
   generateMoves = () => {
-    if (!this.moves) this.generateTime();
+    if (this.moves === 0) this.generateTime();
     const limit = 195 * this.size - 508;
     const maxHeight = this.moveProgress.closest('.progress').clientHeight;
     this.moves += 1;
