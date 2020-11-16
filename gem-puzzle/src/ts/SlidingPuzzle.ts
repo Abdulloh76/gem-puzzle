@@ -98,23 +98,38 @@ export default class SlidingGame extends GameBoard {
     this.puzzleImg.setAttribute('src', this.bgSrc);
   }
 
-  soundHandler() {}
+  soundHandler = () => {}
 
   sizeHandler = () => {
     this.size = this.size > 7 ? 3 : this.size + 1;
     this.cancelTimer = true;
     this.puzzleContainer.remove();
+    this.generateBaseLayout();
     super.init();
   }
 
-  saveCurrentGame() {}
+  saveCurrentGame = () => {}
 
-  shuffleGame() {}
+  shuffleGame = () => {
+    this.cancelTimer = true;
+    const numbers = this.randomize();
+    for (let i: number = 0; i < numbers.length; i += 1) {
+      const left = i % this.size;
+      const top = (i - left) / this.size;
+      const cell = this.cells.filter((obj) => obj.value === numbers[i])[0];
 
-  showSavedGames() {}
+      cell.id = i + 1;
+      cell.left = left;
+      cell.top = top;
+      cell.value = numbers[i];
 
-  showTopScores() {}
+      this.generateCell(cell);
+    }
+  }
 
-  solveHandler() {}
+  showSavedGames = () => {}
 
+  showTopScores = () => {}
+
+  solveHandler = () => {}
 }

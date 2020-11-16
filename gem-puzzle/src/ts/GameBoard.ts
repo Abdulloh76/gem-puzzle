@@ -43,6 +43,7 @@ export class GameBoard {
     this.size = size;
     this.generateBgImg();
     this.cancelTimer = false;
+    this.generateBaseLayout();
   }
 
   generateBaseLayout() {
@@ -70,7 +71,6 @@ export class GameBoard {
   }
 
   init() {
-    this.generateBaseLayout();
     const numbers = this.randomize();
     const emptyIndex = numbers.indexOf('');
     this.empty = {
@@ -81,7 +81,7 @@ export class GameBoard {
       element: create('div', 'empty', `${numbers[emptyIndex]}`, null),
     };
 
-    for (let i: number = 0; i <= this.size ** 2 - 1; i += 1) {
+    for (let i: number = 0; i < numbers.length; i += 1) {
       const left = i % this.size;
       const top = (i - left) / this.size;
       if (numbers[i] === '') {
@@ -101,7 +101,6 @@ export class GameBoard {
         this.generateCell(this.cells[i]);
         cell.addEventListener('click', this.move);
       }
-
       this.cells[i].element.style.height = `${this.cellSize - 16 / this.size}px`;
       this.cells[i].element.style.width = `${this.cellSize - 16 / this.size}px`;
       // why 16? because it multiple 8(max size of board)?
