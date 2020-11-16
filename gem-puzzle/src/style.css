@@ -27,6 +27,10 @@ body{
    border-radius: 1.5em;
    width: 90%;
    box-shadow: inset 0 0 0.5em #000000;
+   background: 
+      url('../src/img/noise_transparent@2x.png'), 
+      radial-gradient(100% 215.42% at 0% 0%, #836753 0%, #353233 100%), 
+      #211F20;
 }
 
 .cell{
@@ -84,9 +88,12 @@ body{
    align-items: center;
    justify-content: center;
    border-radius: 0.5em;
-   background-color: rgb(139, 69, 19);
+   font-weight: 500;
+   background: 
+      url('../src/img/noise_transparent@2x.png'), 
+      radial-gradient(100% 215.42% at 0% 0%, #685143 0%, #524b4d 100%), 
+      #211F20;
    box-shadow: inset 0 0 2.5em #000000;
-
 }
 
 .progress{
@@ -170,7 +177,12 @@ body{
    width: 100%;
    border-radius: 1.5em;
    z-index: 2;
-   background-color: aqua;
+   color: #ffffff;
+   background: 
+      url('../src/img/noise_transparent@2x.png'), 
+      radial-gradient(100% 215.42% at 0% 0%, #685143 0%, #262425 100%), 
+      #211F20;
+
 
    display: flex;
    flex-direction: column;
