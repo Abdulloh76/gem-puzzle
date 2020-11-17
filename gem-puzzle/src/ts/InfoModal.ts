@@ -1,5 +1,6 @@
 import create from './utils/create';
 import { addZero } from './GameBoard';
+import Records from './records';
 
 export default class InfoModal {
   parent: HTMLElement;
@@ -41,7 +42,37 @@ export default class InfoModal {
 
   limitIsOut() {}
 
-  generateTable() {}
+  generateTable(records: Array<Records>) {
+    const table = create('table', 'table', null, this.modalBase);
+    create(
+      'thead',
+      '',
+      create(
+        'tr',
+        '',
+        `<th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Moves</th>
+        <th scope="col">Time</th>`,
+        table,
+      ),
+      table,
+    );
+    const tBody = create('tbody', '', '', table);
+    for (let i = 0; i < 10; i += 1) {
+      if (records[i] === undefined) return;
+      const time = `${addZero(Math.floor(records[i].time / 60))}:${addZero(records[i].time % 60)}`;
+      create(
+        'tr',
+        '',
+        `<th scope="row">${i + 1}</th>
+        <td>${new Date(`${records[i].date}`).toLocaleString()}</td>
+        <td>${records[i].moves}</td>
+        <td>${time}</td>`,
+        tBody,
+      );
+    }
+  }
 
   gameIsSaved() {}
 
