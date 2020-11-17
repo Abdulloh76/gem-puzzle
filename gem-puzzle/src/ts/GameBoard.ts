@@ -2,6 +2,7 @@ import Cell from './Cell';
 import create from './utils/create';
 import dontUseStrictly from './utils/dontUseImg';
 import InfoModal from "./InfoModal";
+import Records from './records';
 
 export const main: HTMLElement = create(
   'main',
@@ -173,6 +174,17 @@ export class GameBoard {
       this.cancelTimer = true;
       const modal = new InfoModal(this.gameBoard)
       modal.finished(this.timer, this.moves);
+      const records = JSON.parse(localStorage.getItem('records')) || {};
+      const size = `${this.size}`;
+      if (!records[size]) records[size] = [];
+
+      records[size].push({
+        date: new Date(),
+        moves: this.moves,
+        time: this.timer,
+      })
+      records[size].sort((a:Records, b:Records) => a.moves - b.moves)
+      localStorage.setItem('records', JSON.stringify(records));
     }
     this.generateCell(this.empty);
     this.generateCell(cell);
