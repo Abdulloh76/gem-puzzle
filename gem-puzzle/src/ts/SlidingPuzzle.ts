@@ -1,4 +1,5 @@
 import { GameBoard, main } from './GameBoard';
+import InfoModal from './InfoModal';
 import create from './utils/create';
 
 export default class SlidingGame extends GameBoard {
@@ -139,7 +140,13 @@ export default class SlidingGame extends GameBoard {
 
   showSavedGames = () => {}
 
-  showTopScores = () => {}
+  showTopScores = () => {
+    const records = JSON.parse(localStorage.getItem('records'));
+    const size = `${this.size}`
+    console.log(records[size])
+    const modal = new InfoModal(this.gameBoard)
+    modal.generateTable(records[size]);
+  }
 
   solveHandler = () => {}
 }
