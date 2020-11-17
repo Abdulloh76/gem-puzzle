@@ -143,7 +143,6 @@ export default class SlidingGame extends GameBoard {
   showTopScores = () => {
     const records = JSON.parse(localStorage.getItem('records'));
     const size = `${this.size}`
-    console.log(records[size])
     const modal = new InfoModal(this.gameBoard)
     modal.generateTable(records[size]);
   }

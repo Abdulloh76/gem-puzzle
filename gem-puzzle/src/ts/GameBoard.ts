@@ -1,13 +1,12 @@
 import Cell from './Cell';
 import create from './utils/create';
 import dontUseStrictly from './utils/dontUseImg';
-import InfoModal from "./InfoModal";
+import InfoModal from './InfoModal';
 import Records from './records';
 
 export const main: HTMLElement = create(
   'main',
   'game',
-  // [create('h1', 'title', 'RSS Sliding puzzle Game', null)],
   null,
   null,
 );
@@ -117,6 +116,7 @@ export class GameBoard {
     this.drawBg(this.bgSrc);
     this.generateTimingLayout()
     document.body.prepend(main);
+    document.body.prepend(create('h1', 'title', 'RSS Sliding puzzle Game', null))
   }
 
   randomize(): Array<number | string> {

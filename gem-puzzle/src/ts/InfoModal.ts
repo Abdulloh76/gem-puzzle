@@ -40,7 +40,7 @@ export default class InfoModal {
     );
   }
 
-  limitIsOut() {}
+  limitIsOut = () => {}
 
   generateTable(records: Array<Records>) {
     const table = create('table', 'table', null, this.modalBase);
@@ -74,7 +74,7 @@ export default class InfoModal {
     }
   }
 
-  gameIsSaved() {}
+  gameIsSaved = () => {}
 
-  showSavedGames() {}
+  showSavedGames = () => {}
 }
