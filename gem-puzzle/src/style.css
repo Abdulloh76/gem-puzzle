@@ -293,3 +293,9 @@ tbody, thead, td {
       font-size: 12px;
    }
 }
+
+
+.saved-games>img, .save-game>img, .solve-puzzle>img,
+.saved-games>p, .save-game>p, .solve-puzzle>p {
+   opacity: 0.6;
+}

@@ -57,7 +57,7 @@ export default class SlidingGame extends GameBoard {
     this.saveGame = create('button', 'option save-game icon-darked', [
       create('img', '', null, null, ['src', './src/icons/save-game.svg']),
       create('p', '', 'save game', null),
-    ], this.options);
+    ], this.options, ['title', 'available in pro version']);
     //  shuffle
     this.shuffle = create('button', 'option shuffle icon-darked', [
       create('img', '', null, null, ['src', './src/icons/shuffle.svg']),
@@ -67,7 +67,7 @@ export default class SlidingGame extends GameBoard {
     this.savedGames = create('button', 'option saved-games icon-darked', [
       create('img', '', null, null, ['src', './src/icons/saved-games.svg']),
       create('p', '', 'saved games', null),
-    ], this.options);
+    ], this.options, ['title', 'available in pro version']);
     //  topScores
     this.topScores = create('button', 'option top-scores icon-darked', [
       create('img', '', null, null, ['src', './src/icons/podium.svg']),
@@ -77,7 +77,7 @@ export default class SlidingGame extends GameBoard {
     this.solvePuzzle = create('button', 'option solve-puzzle icon-darked', [
       create('img', '', null, null, ['src', './src/icons/solution.svg']),
       create('p', '', 'solve puzzle', null),
-    ], this.options);
+    ], this.options, ['title', 'available in pro version']);
 
     this.events();
   }
