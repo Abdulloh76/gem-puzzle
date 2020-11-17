@@ -116,7 +116,6 @@ export class GameBoard {
     this.drawBg(this.bgSrc);
     this.generateTimingLayout()
     document.body.prepend(main);
-    document.body.prepend(create('h1', 'title', 'RSS Sliding puzzle Game', null))
   }
 
   randomize(): Array<number | string> {
